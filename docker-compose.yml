@@ -1,0 +1,86 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - ${JELLYFIN_PORT}:${JELLYFIN_PORT}
+    volumes:
+      - ~/docker/jellyfin/config:/config
+      - /mnt/media:/media
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - TZ=${TZ}
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - ${RADARR_PORT}:${RADARR_PORT}
+    volumes:
+      - ~/docker/radarr/config:/config
+      - /mnt/media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    ports:
+      - ${SONARR_PORT}:${SONARR_PORT}
+    volumes:
+      - ~/docker/sonarr/config:/config
+      - /mnt/media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    ports:
+      - ${PROWLARR_PORT}:${PROWLARR_PORT}
+    volumes:
+      - ~/docker/prowlarr/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+  jellyseerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: jellyseerr
+    restart: unless-stopped
+    ports:
+      - ${JELLYSEERR_PORT}:${JELLYSEERR_PORT}
+    volumes:
+      - ~/docker/jellyseerr/config:/app/config
+    environment:
+      - TZ=${TZ}
+
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - ${WIREGUARD_PORT}:${WIREGUARD_PORT}/udp
+    volumes:
+      - ~/docker/wireguard/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - SERVERURL=auto
+      - PEERS=phone,laptop
+      - PEERDNS=1.1.1.1
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1

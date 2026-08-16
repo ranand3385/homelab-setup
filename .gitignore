@@ -1,0 +1,12 @@
+# Allowlist: ignore everything, then opt specific files back in.
+# App config dirs hold databases, API keys, VPN/Tailscale state and personal data.
+/*
+!/.gitignore
+!/.env.example
+!/docker-compose.yml
+
+# Never commit secrets, even if re-included above
+.env
+*.key
+*.crt
+__pycache__/
