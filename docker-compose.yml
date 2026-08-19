@@ -13,6 +13,41 @@ services:
     environment:
       - TZ=${TZ}
 
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${QBIT_WEBUI_PORT}:${QBIT_WEBUI_PORT}
+      - ${TORRENT_PORT}:${TORRENT_PORT}
+      - ${TORRENT_PORT}:${TORRENT_PORT}/udp
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - SERVER_COUNTRIES=United States
+      - TZ=${TZ}
+    volumes:
+      - ~/docker/gluetun:/tmp/gluetun
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    volumes:
+      - ~/docker/qbittorrent/config:/config
+      - /mnt/media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - WEBUI_PORT=${QBIT_WEBUI_PORT}
+
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
