@@ -119,3 +119,23 @@ services:
       - PEERDNS=1.1.1.1
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    ports:
+      - ${FLARESOLVERR_PORT}:${FLARESOLVERR_PORT}
+    environment:
+      - TZ=${TZ}
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *
