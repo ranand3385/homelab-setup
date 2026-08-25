@@ -139,3 +139,18 @@ services:
       - TZ=${TZ}
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_SCHEDULE=0 0 4 * * *
+
+  seadexerr:
+    image: ghcr.io/ryder-c/seadexerr:latest
+    container_name: seadexerr
+    restart: unless-stopped
+    ports:
+      - ${SEADEXERR_PORT}:${SEADEXERR_PORT}
+    environment:
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - SONARR_BASE_URL=http://sonarr:${SONARR_PORT}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+      - RADARR_BASE_URL=http://radarr:${RADARR_PORT}
+      - SEADEXERR_PORT=${SEADEXERR_PORT}
+    volumes:
+      - ~/docker/seadexerr:/data
