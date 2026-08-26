@@ -154,3 +154,11 @@ services:
       - SEADEXERR_PORT=${SEADEXERR_PORT}
     volumes:
       - ~/docker/seadexerr:/data
+
+  seadexarr:
+    image: ghcr.io/bbtufty/seadexarr:latest
+    container_name: seadexarr
+    volumes:
+      - ~/docker/seadexarr/config:/config
+    environment:
+      - TZ=${TZ}
