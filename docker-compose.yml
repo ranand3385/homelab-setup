@@ -162,3 +162,17 @@ services:
       - ~/docker/seadexarr/config:/config
     environment:
       - TZ=${TZ}
+  
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb-for-ols
+    user: 5984:5984
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+    volumes:
+      - ~/docker/couchdb-data:/opt/couchdb/data
+      - ~/docker/couchdb-etc:/opt/couchdb/etc/local.d
+    ports:
+      - ${COUCHDB_PORT}:${COUCHDB_PORT}
+    restart: unless-stopped
