@@ -139,6 +139,7 @@ services:
       - TZ=${TZ}
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_SCHEDULE=0 0 4 * * *
+      - DOCKER_API_VERSION=1.45
 
   seadexerr:
     image: ghcr.io/ryder-c/seadexerr:latest
