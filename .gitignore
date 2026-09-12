@@ -5,6 +5,7 @@
 !/.env.example
 !/docker-compose.yml
 !/av1_migrate.py
+!/av1_pipeline.py
 
 # Never commit secrets, even if re-included above
 .env
