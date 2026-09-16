@@ -88,6 +88,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
+      - PROWLARR__SERVER__ENABLEIPV6=false
   jellyseerr:
     image: ghcr.io/seerr-team/seerr:latest
     container_name: jellyseerr
