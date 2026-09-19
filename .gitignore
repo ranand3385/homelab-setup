@@ -3,6 +3,7 @@
 /*
 !/.gitignore
 !/.env.example
+!/README.md
 !/docker-compose.yml
 !/av1_migrate.py
 !/av1_pipeline.py
