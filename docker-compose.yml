@@ -178,3 +178,35 @@ services:
     ports:
       - ${COUCHDB_PORT}:${COUCHDB_PORT}
     restart: unless-stopped
+
+  ts-actual-server:
+    image: tailscale/tailscale:latest
+    container_name: ts-actual-server
+    hostname: ${TS_HOSTNAME}
+    restart: unless-stopped
+    ports:
+      - ${ACTUAL_PORT}:${ACTUAL_PORT}
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_SERVE_CONFIG=/config/serve-config.json
+    volumes:
+      - ~/docker/actual/ts-state:/var/lib/tailscale
+      - ~/docker/actual/ts-config:/config
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+
+  actual:
+    image: actualbudget/actual-server:latest
+    container_name: actual
+    restart: unless-stopped
+    network_mode: service:ts-actual-server
+    depends_on:
+      - ts-actual-server
+    volumes:
+      - ~/docker/actual:/data
+    environment:
+      - TZ=${TZ}
