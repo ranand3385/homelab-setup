@@ -30,6 +30,8 @@ services:
       - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
       - SERVER_COUNTRIES=United States
+      - PORT_FORWARD_ONLY=on
+      - VPN_PORT_FORWARDING=on
       - TZ=${TZ}
     volumes:
       - ~/docker/gluetun:/tmp/gluetun
