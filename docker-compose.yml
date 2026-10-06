@@ -252,3 +252,32 @@ services:
       - TZ=${TZ}
     volumes:
       - ~/docker/recyclarr/config:/config
+
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    restart: unless-stopped
+    ports:
+      - ${KAVITA_PORT}:${KAVITA_PORT}
+    volumes:
+      - ~/docker/kavita/config:/config
+      - /mnt/media/manga:/data/manga
+      - /mnt/media/comics:/data/comics
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:stable
+    container_name: suwayomi
+    restart: unless-stopped
+    ports:
+      - ${SUWAYOMI_PORT}:${SUWAYOMI_PORT}
+    volumes:
+      - ~/docker/suwayomi/data:/home/suwayomi/.local/share/Tachidesk
+      - /mnt/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
+    environment:
+      - TZ=${TZ}
+      - FLARESOLVERR_ENABLED=true
+      - FLARESOLVERR_URL=http://flaresolverr:${FLARESOLVERR_PORT}
