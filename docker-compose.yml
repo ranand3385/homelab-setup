@@ -281,3 +281,18 @@ services:
       - TZ=${TZ}
       - FLARESOLVERR_ENABLED=true
       - FLARESOLVERR_URL=http://flaresolverr:${FLARESOLVERR_PORT}
+
+  kapowarr:
+    image: mrcas/kapowarr:latest
+    container_name: kapowarr
+    restart: unless-stopped
+    ports:
+      - ${KAPOWARR_PORT}:${KAPOWARR_PORT}
+    volumes:
+      - ~/docker/kapowarr/db:/app/db
+      - /mnt/media/downloads/kapowarr-temp:/app/temp_downloads
+      - /mnt/media/comics:/comics
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}

@@ -9,6 +9,10 @@
 !/av1_migrate.py
 !/av1_pipeline.py
 
+!/scripts/
+/scripts/*
+!/scripts/*.sh
+
 # Never commit secrets, even if re-included above
 .env
 *.key
