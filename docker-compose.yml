@@ -296,3 +296,18 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
+
+
+  komga:
+    image: gotson/komga:latest
+    container_name: komga
+    restart: unless-stopped
+    user: "1000:1000"
+    ports:
+      - ${KOMGA_PORT}:${KOMGA_PORT}
+    volumes:
+      - ~/docker/komga/config:/config
+      - /mnt/media/manga:/data/manga:ro
+      - /mnt/media/comics:/data/comics:ro
+    environment:
+      - TZ=${TZ}
