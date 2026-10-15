@@ -1,7 +1,8 @@
 # Homelab stack
 
-Docker Compose stack for a home media server: Jellyfin, Sonarr/Radarr/Prowlarr,
-qBittorrent behind Gluetun (VPN), Jellyseerr, WireGuard, CouchDB, and Watchtower.
+Docker Compose stack for a home media server: Jellyfin, Sonarr/Radarr/Prowlarr/Bazarr,
+qBittorrent behind Gluetun (VPN), Jellyseerr, Kavita/Komga/Suwayomi/Kapowarr,
+Pi-hole, WireGuard, Actual Budget (via Tailscale), CouchDB, and Watchtower.
 
 ## Setup
 
@@ -15,6 +16,8 @@ App config/data lives in per-service directories next to the compose file
 
 ## Scripts
 
+- `update-port.sh`: syncs Gluetun's forwarded port into qBittorrent (cron, every 5 min)
+- `scripts/kavita-scan.sh`: triggers a Kavita library scan (cron)
 - `av1_*.py`: one-off AV1 re-encode/migration helpers for Radarr/Sonarr
 
 Scripts read credentials from `.env`. `av1_pipeline.py` reads its queue from a local,
