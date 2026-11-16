@@ -7,7 +7,7 @@ services:
       - ${JELLYFIN_PORT}:${JELLYFIN_PORT}
     volumes:
       - ~/docker/jellyfin/config:/config
-      - /mnt/media:/media
+      - ${MEDIA_ROOT}:/media
     devices:
       - /dev/dri:/dev/dri
     environment:
@@ -43,7 +43,7 @@ services:
     network_mode: "service:gluetun"
     volumes:
       - ~/docker/qbittorrent/config:/config
-      - /mnt/media:/media
+      - ${MEDIA_ROOT}:/media
     environment:
       - PUID=1000
       - PGID=1000
@@ -58,7 +58,7 @@ services:
       - ${RADARR_PORT}:${RADARR_PORT}
     volumes:
       - ~/docker/radarr/config:/config
-      - /mnt/media:/media
+      - ${MEDIA_ROOT}:/media
     environment:
       - PUID=1000
       - PGID=1000
@@ -72,7 +72,7 @@ services:
       - ${SONARR_PORT}:${SONARR_PORT}
     volumes:
       - ~/docker/sonarr/config:/config
-      - /mnt/media:/media
+      - ${MEDIA_ROOT}:/media
     environment:
       - PUID=1000
       - PGID=1000
@@ -237,7 +237,7 @@ services:
       - ${BAZARR_PORT}:${BAZARR_CONTAINER_PORT}
     volumes:
       - ~/docker/bazarr/config:/config
-      - /mnt/media:/media
+      - ${MEDIA_ROOT}:/media
     environment:
       - PUID=1000
       - PGID=1000
@@ -261,8 +261,8 @@ services:
       - ${KAVITA_PORT}:${KAVITA_PORT}
     volumes:
       - ~/docker/kavita/config:/config
-      - /mnt/media/manga:/data/manga
-      - /mnt/media/comics:/data/comics
+      - ${MEDIA_ROOT}/manga:/data/manga
+      - ${MEDIA_ROOT}/comics:/data/comics
     environment:
       - PUID=1000
       - PGID=1000
@@ -276,7 +276,7 @@ services:
       - ${SUWAYOMI_PORT}:${SUWAYOMI_PORT}
     volumes:
       - ~/docker/suwayomi/data:/home/suwayomi/.local/share/Tachidesk
-      - /mnt/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
+      - ${MEDIA_ROOT}/manga:/home/suwayomi/.local/share/Tachidesk/downloads
     environment:
       - TZ=${TZ}
       - FLARESOLVERR_ENABLED=true
@@ -290,8 +290,8 @@ services:
       - ${KAPOWARR_PORT}:${KAPOWARR_PORT}
     volumes:
       - ~/docker/kapowarr/db:/app/db
-      - /mnt/media/downloads/kapowarr-temp:/app/temp_downloads
-      - /mnt/media/comics:/comics
+      - ${MEDIA_ROOT}/downloads/kapowarr-temp:/app/temp_downloads
+      - ${MEDIA_ROOT}/comics:/comics
     environment:
       - PUID=1000
       - PGID=1000
@@ -307,7 +307,7 @@ services:
       - ${KOMGA_PORT}:${KOMGA_PORT}
     volumes:
       - ~/docker/komga/config:/config
-      - /mnt/media/manga:/data/manga:ro
-      - /mnt/media/comics:/data/comics:ro
+      - ${MEDIA_ROOT}/manga:/data/manga:ro
+      - ${MEDIA_ROOT}/comics:/data/comics:ro
     environment:
       - TZ=${TZ}
